@@ -2,9 +2,12 @@
 [![JitterPhysics Build][appveyor-badge]][appveyor-link] [![JitterPhysics on NuGet][nuget-badge]][nuget-link]
 
 ---
-## Project Update: August 8, 2021
+## Project Information
 
-Jitter Physics is under active development again. Expect new updates, improvements and code fixes in the near future.
+This fork of Jitter Physics aims to implement 128-bit precision to work better for Space Games where shifting the origin is not an option.
+While still being 100% compatable with the previous Jitter physics with as little API changes as possible.
+
+This goal hasent yet been reached yet as of July 20, 2022
 
 ---
 
@@ -29,11 +32,6 @@ Jitter Physics is a fast and lightweight 3D physics engine written in C#.
  - Take advantage of multi-core CPUs by using the internal multithreading of 
    the engine 
 
-## Jitter Physics (2D)
-
-The ["Jitter-2D" branch][jitter2d] is still in development an is not complete.
-At this time, it is probably better to make use of [Farseer Physics][farseer].
-
 ## Quick Start
 
 ### Initialize the Physics System
@@ -45,9 +43,10 @@ Create a world class and initialize it with a `CollisionSystem`:
 ### Add Objects to the World
 Create a shape of your choice and pass it to a body:
 
-    Shape shape = new BoxShape(1.0f, 2.0f, 3.0f);
+    Shape shape = new BoxShape(1.0m, 2.0m, 3.0m);
     RigidBody body = new RigidBody(shape);
 
+Note the m at the end of numbers instead of f. This is required in this fork since all numbers are stored as Decimals instad of Floats.
 It's valid to use the same shape for different bodies. 
 Set the position and orientation of the body by using it's properties. 
 The next step is to add the `Body` to the world:
@@ -60,7 +59,7 @@ This should be done in you main game loop:
  
     while (gameRunning)
     {
-        world.Step(1.0f / 100.0f, true);
+        world.Step(1.0m / 100.0m, true);
         
         // do other stuff, like drawing
     }
